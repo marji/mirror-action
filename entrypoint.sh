@@ -12,6 +12,7 @@ GIT_SSH_PUBLIC_KEY=${INPUT_GIT_SSH_PUBLIC_KEY}
 GIT_PUSH_ARGS=${INPUT_GIT_PUSH_ARGS:-"--tags --force --prune"}
 GIT_SSH_NO_VERIFY_HOST=${INPUT_GIT_SSH_NO_VERIFY_HOST}
 GIT_SSH_KNOWN_HOSTS=${INPUT_GIT_SSH_KNOWN_HOSTS}
+GIT_KEEP_MIRROR_TAGS=${INPUT_GIT_KEEP_MIRROR_TAGS}
 HAS_CHECKED_OUT="$(git rev-parse --is-inside-work-tree 2>/dev/null || /bin/true)"
 
 
@@ -63,6 +64,9 @@ fi
 
 
 git remote add mirror "${REMOTE}"
+if [[ "${GIT_KEEP_MIRROR_TAGS}" != "false" ]]; then
+    git fetch --tags mirror
+fi
 if [[ "${INPUT_PUSH_ALL_REFS}" != "false" ]]; then
     eval git push ${GIT_PUSH_ARGS} mirror "\"refs/remotes/origin/*:refs/heads/*\""
 else

@@ -35,6 +35,10 @@ inputs:
     description: "The arugments to use when pushing the repository"
     default: '--tags --force --prune'
     required: false
+  GIT_KEEP_MIRROR_TAGS:
+    description: "Whether to keep tags from mirror"
+    default: "false"
+    required: false
   DEBUG:
     description: 'set to "true" to enable debug mode'
     default: "false"
